@@ -15,7 +15,8 @@ def init_driver():
     return webdriver.Chrome(service=service, options=options)
 
 def enrich_coordinates_resume():
-    file_path = "data/raw/booking_data_enriched.csv"
+    os.makedirs("data/processed", exist_ok=True)
+    file_path = "data/processed/booking_data_enriched.csv"
     
     # 1. Load Data (Resume if exists, otherwise start fresh)
     if os.path.exists(file_path):

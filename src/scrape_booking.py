@@ -10,15 +10,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 
 # --- CONFIGURATION ---
-CITIES = [
-    "Mont Saint Michel", "St Malo", "Bayeux", "Le Havre", "Rouen", "Paris", "Amiens",
-    "Lille", "Strasbourg", "Chateau du Haut Koenigsbourg", "Colmar", "Eguisheim",
-    "Besancon", "Dijon", "Annecy", "Grenoble", "Lyon", "Gorges du Verdon",
-    "Bormes les Mimosas", "Cassis", "Marseille", "Aix en Provence", "Avignon",
-    "Uzes", "Nimes", "Aigues Mortes", "Saintes Maries de la mer", "Collioure",
-    "Carcassonne", "Ariege", "Toulouse", "Montauban", "Biarritz", "Bayonne",
-    "La Rochelle"
-]
+#  Read cities from the master text file to ensure ID consistency
+with open("data/cities.txt", "r", encoding="utf-8") as file:
+    CITIES = [line.strip() for line in file if line.strip()]
 
 def init_driver():
     options = webdriver.ChromeOptions()
