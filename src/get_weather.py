@@ -13,21 +13,15 @@ if not API_KEY:
     raise ValueError("❌ Error: OPENWEATHER_API_KEY not found. Check your .env file.")
 
 # 2. Define the cities
-cities = [
-    "Mont Saint Michel", "St Malo", "Bayeux", "Le Havre", "Rouen", "Paris", "Amiens",
-    "Lille", "Strasbourg", "Chateau du Haut Koenigsbourg", "Colmar", "Eguisheim",
-    "Besancon", "Dijon", "Annecy", "Grenoble", "Lyon", "Gorges du Verdon",
-    "Bormes les Mimosas", "Cassis", "Marseille", "Aix en Provence", "Avignon",
-    "Uzes", "Nimes", "Aigues Mortes", "Saintes Maries de la mer", "Collioure",
-    "Carcassonne", "Ariege", "Toulouse", "Montauban", "Biarritz", "Bayonne",
-    "La Rochelle"
-]
+# Read cities from the master text file
+with open("data/cities.txt", "r", encoding="utf-8") as file:
+    cities = [line.strip() for line in file if line.strip()]
 
 # 3. Helper: Geocoding
 def get_coords(city):
     url = "https://nominatim.openstreetmap.org/search"
     params = {
-        "q": city,
+        "q": f"{city}, France",   # <--- adding France to avoid getting a city in another country
         "format": "json", 
         "limit": 1
     }
