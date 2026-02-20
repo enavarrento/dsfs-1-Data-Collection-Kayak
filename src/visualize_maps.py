@@ -39,8 +39,11 @@ def visualize_maps():
     # Sort strictly by weather score (best at the top)
     city_stats = city_stats.sort_values(by='weather_score', ascending=False)
 
-    # Baseline size so terrible cities don't vanish entirely
-    city_stats['plot_size'] = city_stats['weather_score'].apply(lambda x: max(x + 5, 2))
+    # Escala no lineal, pero más contenida
+    w = city_stats['weather_score']
+    w_norm = (w - w.min()) / (w.max() - w.min() + 1e-6)  # 0–1
+    # Non linear scalin, min ~5, máx ~25, highlights more the highest values.
+    city_stats['plot_size'] = (5 + 20 * (w_norm ** 1.7)).clip(lower=5)
 
     # THE HIGHLIGHT LOGIC: Create labels ONLY for the first 5 rows
     city_stats['highlight_label'] = "" 
@@ -71,7 +74,7 @@ def visualize_maps():
         map_style="carto-positron", 
         color_continuous_scale="Turbo", 
         range_color=[0, 100],           
-        title="Destinations Ranked by Weather (Turbo Scale: Blue=Cold, Green=Perfect, Red=Hot)"
+        title="Destinations Ranked by Weather (size)<br>Color Scale: Blue=Cold, Green=Ideal (25°C=index 50), Red=Hot"
     )
 
     # Apply a single, valid position to the map
@@ -166,7 +169,7 @@ def visualize_maps():
         size="score", 
         zoom=6, 
         map_style="open-street-map",
-        color_continuous_scale="Viridis",
+        color_continuous_scale="Bluyl",
         title="Top Hotels in the Best Destinations (Exact Coordinates)"
     )
 
