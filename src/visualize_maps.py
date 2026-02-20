@@ -42,7 +42,7 @@ def visualize_maps():
     # Baseline size so terrible cities don't vanish entirely
     city_stats['plot_size'] = city_stats['weather_score'].apply(lambda x: max(x + 5, 2))
 
-    # 🌟 THE HIGHLIGHT LOGIC: Create labels ONLY for the first 5 rows
+    # THE HIGHLIGHT LOGIC: Create labels ONLY for the first 5 rows
     city_stats['highlight_label'] = "" 
 
     top_5_indices = city_stats.head(5).index
@@ -74,13 +74,13 @@ def visualize_maps():
         title="Destinations Ranked by Weather (Turbo Scale: Blue=Cold, Green=Perfect, Red=Hot)"
     )
 
-    # 🎨 Apply a single, valid position to the map
+    # Apply a single, valid position to the map
     fig1.update_traces(
         textposition='top center', # MUST be a single string!
         textfont=dict(size=14, color='black', weight='bold')
     )
     
-    # 🏆 BUILD THE LEADERBOARD BOX
+    # BUILD THE LEADERBOARD BOX
     top_5_df = city_stats.head(5)
     
     # Create the HTML-formatted text for our custom legend
@@ -136,7 +136,7 @@ def visualize_maps():
     top_100_hotels['map_lat'] = final_lats
     top_100_hotels['map_lon'] = final_lons
 
-# ✂️ THE FIX: Truncate to 150 chars, THEN wrap every 50 chars onto a new line
+# Truncate to 150 chars, THEN wrap every 50 chars onto a new line
     def format_description(text):
         if not isinstance(text, str):
             return str(text)
@@ -170,7 +170,7 @@ def visualize_maps():
         title="Top Hotels in the Best Destinations (Exact Coordinates)"
     )
 
-    # 🏆 BUILD THE CONTEXT BOX (Top 5 Cities)
+    # BUILD THE CONTEXT BOX (Top 5 Cities)
     # Extract the unique Top 5 cities based on their weather score
     top_5_cities_df = top_100_hotels[['city', 'weather_score']].drop_duplicates().sort_values(by='weather_score', ascending=False).head(5)
     
