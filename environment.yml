@@ -1,0 +1,9 @@
+name: dsfs-scraping
+channels:
+  - conda-forge
+  - https://software.repos.intel.com/python/conda/
+  - defaults
+dependencies:
+  - python=3.12
+  - nbformat
+  - pipreqs
